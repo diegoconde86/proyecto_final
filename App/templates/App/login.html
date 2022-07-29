@@ -1,0 +1,20 @@
+{% extends "App/padre.html" %}
+
+{% load static %}
+
+{% block titulo %}
+<h1 class="mb-5">LOGIN </h1>
+{% endblock %}
+
+
+{% block cambia %}
+<p>{{ mensaje }}</p>
+<form action="{% url 'login' %}" method="POST">
+
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type="submit"> Iniciar Sesión</button> 
+</form>
+ 
+
+{% endblock %}

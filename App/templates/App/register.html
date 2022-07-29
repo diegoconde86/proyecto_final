@@ -1,0 +1,20 @@
+{% extends "App/padre.html" %}
+
+{% load static %}
+
+{% block titulo %}
+<h1 class="mb-5">REGRISTRO!</h1>
+{% endblock %}
+
+
+{% block cambia %}
+<p>{{ mensaje }}</p>
+<form action="{% url 'register' %}" method="POST">
+
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type="submit">Registrate</button> 
+</form>
+ 
+
+{% endblock %}

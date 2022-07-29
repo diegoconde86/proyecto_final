@@ -6,6 +6,8 @@ class Mascota(models.Model):
     edad = models.IntegerField()
     tipo = models.CharField(max_length=50) #perro, gato, etc.
 
+    #titulo, subtitulo, cuerpo, autor, imagenes, fecha
+
     def __str__(self) -> str:
         return 'nombre: '+self.nombre + ' edad: ' + str(self.edad) + ' tipo: ' + self.tipo
 
@@ -23,4 +25,3 @@ class Veterinario(models.Model):
 
     def __str__(self) -> str:
         return 'nombre: '+self.nombre + ' especialidad: ' + self.especialidad
-
