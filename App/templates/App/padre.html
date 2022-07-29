@@ -23,17 +23,17 @@
         <nav class="navbar navbar-light bg-light static-top">
             <div class="container">
                 <a class="btn btn-primary" href="{% url 'Inicio' %}">Inicio</a>
-                <!--<a class="btn btn-primary" href="{% url 'Mascota' %}">Mascota</a>-->
-                <!--<a class="btn btn-primary" href="{% url 'Cliente' %}">Cliente</a>-->
-                <!--<a class="btn btn-primary" href="{% url 'Veterinario' %}">Veterinario</a>-->
                 <a class="btn btn-primary" href="{% url 'Inicio' %}">Articulos</a>
                 <a class="btn btn-primary" href="{% url 'MascotaFormulario' %}">Nuestras Mascotas</a>
                 <a class="btn btn-primary" href="{% url 'Inicio' %}">Chat</a>
-                <!--<a class="btn btn-primary" href="{% url 'ClienteFormulario' %}">Cliente Formulario</a>-->
-                <!--<a class="btn btn-primary" href="{% url 'VeterinarioFormulario' %}">Veterinario Formulario</a>-->
-                <!--<a class="btn btn-primary" href="{% url 'BusquedaMascota' %}">Busqueda Mascota</a>-->
                 <a class="btn btn-primary" href="{% url 'Nosotros' %}">Nosotros</a>
                 <a class="btn btn-primary" href="{% url 'register' %}">Registrar</a>
+                 <!--<a class="btn btn-primary" href="{% url 'ClienteFormulario' %}">Cliente Formulario</a>-->
+                <!--<a class="btn btn-primary" href="{% url 'VeterinarioFormulario' %}">Veterinario Formulario</a>-->
+                <!--<a class="btn btn-primary" href="{% url 'BusquedaMascota' %}">Busqueda Mascota</a>-->
+                <!--<a class="btn btn-primary" href="{% url 'Mascota' %}">Mascota</a>-->
+                <!--<a class="btn btn-primary" href="{% url 'Cliente' %}">Cliente</a>-->
+                <!--<a class="btn btn-primary" href="{% url 'Veterinario' %}">Veterinario</a>-->
                 {% if not request.user.is_authenticated %}
                 
                 <a class="btn btn-danger" href="{% url 'login' %}">LOGIN</a>
