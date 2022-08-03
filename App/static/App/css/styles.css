@@ -3067,17 +3067,26 @@ textarea.form-control-lg {
   color: #fff;
   background-color: #dc3545;
   border-color: #6c757d;
+  line-height: 0.1;
 }
 .btn-crud-editar {
   color: #fff;
   background-color: #f89500;
   border-color: #6c757d;
+  line-height: 0.1;
+}
+.btn-crud-buscar {
+  color: #fff;
+  background-color: #159904;
+  border-color: #6c757d;
+  line-height: 0.45;
 }
 
 .btn-crud-agregar {
   color: #fff;
   background-color: #159904;
   border-color: #6c757d;
+  line-height: 0.1;
 }
 .btn-secondary:hover {
   color: #fff;

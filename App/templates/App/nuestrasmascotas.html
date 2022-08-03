@@ -3,15 +3,33 @@
 {% load static %}
 
 {% block cambia %}
-<h1>Formulario de Mascotas</h1>
+<h1>MUNDO MASCOTAS!!</h1>
+<br>
+<h4>Comparti con la comunidad las foto de tus mascotas:</h4>
 
-    {% if miFormulario.errors %}
+        <form action = "{% url 'buscar' %}" method="GET">
+
+            <input type="text" name = 'nombre'  id = 'nombre'>    
+    
+            <input class="btn btn-crud-buscar" type = 'submit', value='Buscar'>
+
+        </form>
+
+    {% if mensaje %}
+    <p style ='color:red'> {{mensaje}}</p>
+    {% endif %}
+
+    {% if .errors %}
     <p style ='color:red'> 'Hay un error en el formulario revisar'</p>
     {% endif %}
 
-    {% for mascota in mascotas %}
+    {% for mascota in mascotas %}   
 
-    <li>{{ mascota }}</li>
+    <img src="/{{ mascota.imagen }}" width="100" 
+    height="100">
+    <br>
+    <p class="lead mb-0">{{ mascota }}</p>
+    
     <button>
         <a class="btn btn-crud-eliminar" href="{% url 'eliminarmascota' mascota.nombre %}"> Eliminar</a>
     </button>

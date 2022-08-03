@@ -11,9 +11,9 @@ urlpatterns = [
     path('mascotaFormulario/', mascotaFormulario, name='MascotaFormulario'),
     path('clienteFormulario/', clienteFormulario, name='ClienteFormulario'),
     path('veterinarioFormulario/', veterinarioFormulario, name='VeterinarioFormulario'),
-    path('busquedaMascota/', busquedaMascota, name='BusquedaMascota'),
+    #path('busquedaMascota/', busquedaMascota, name='BusquedaMascota'),
     path('nosotros/', nosotros, name='Nosotros'),
-    path('buscar/', buscar),
+    path('buscar/', buscar, name='buscar'),
     path('logout/', LogoutView.as_view(template_name='App/logout.html'), name ='logout'),
 
     #------------------------------------------- URLS LOGIN

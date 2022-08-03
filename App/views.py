@@ -23,7 +23,6 @@ def veterinario(request):
     return render(request, 'App/veterinario.html')
 
 
-
 def clienteFormulario(request):
     if request.method == 'POST':
         miFormulario = ClienteFormulario(request.POST)
@@ -65,7 +64,7 @@ def nosotros(request):
     return render(request, 'App/nosotros.html')
 
 
-def buscar(request):
+'''def buscar(request):
 
     if request.GET['nombre']:
         nombre_mascota = request.GET['nombre']
@@ -73,7 +72,7 @@ def buscar(request):
 
         return render(request, 'App/resultadosBusqueda.html', {'mascotas':mascotas})
     else:
-        return render(request, 'App/busquedaMascota.html', {'errors':'No ingresaste ningún nombre de mascota'})
+        return render(request, 'App/busquedaMascota.html', {'errors':'No ingresaste ningún nombre de mascota'})'''
 
 # Agregado: DC - LOGIN --------------------------------------------------------
 
@@ -114,12 +113,11 @@ def mascotaFormulario(request):
     autor = request.user.username
     fecha = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     if request.method == 'POST':
-        miFormulario = MascotaFormulario(request.POST)
+        miFormulario = MascotaFormulario(request.POST, request.FILES)
         print(miFormulario)
         if miFormulario.is_valid:
             informacion = miFormulario.cleaned_data
-
-            mascota = Mascota(nombre = informacion['nombre'], edad = informacion['edad'], tipo = informacion['tipo'], autor=autor, fecha=fecha)
+            mascota = Mascota(nombre = informacion['nombre'], edad = informacion['edad'], tipo = informacion['tipo'], imagen=informacion['imagen'], autor=autor, fecha=fecha)
             mascota.save()
 
             return render(request, 'App/inicio.html')
@@ -161,5 +159,11 @@ def editarmascota(request,nombre_mascota):
         form= MascotaFormulario(initial={"nombre":mascotas.nombre, "edad":mascotas.edad, "tipo":mascotas.tipo, "autor":mascotas.autor, "fecha":mascotas.fecha})
     return render(request, "App/editarmascota.html",{"formulario":form, "nombre_mascota":nombre_mascota})
 
-
-    
+def buscar(request):
+    if request.GET["nombre"]:
+        nombre_mascota= request.GET["nombre"]
+        mascotas = Mascota.objects.filter(nombre__icontains = nombre_mascota) 
+        contexto={"mascotas":mascotas,"mensaje":f"Resultados de la Busqueda {nombre_mascota}" }
+        return render(request, "App/nuestrasmascotas.html", contexto)
+    else:
+        return render(request, "App/nuestrasmascotas.html", {"mensaje":" No se ingreso ningun nombre."})

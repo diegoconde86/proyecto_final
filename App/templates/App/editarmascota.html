@@ -4,7 +4,7 @@
 
 {% block cambia %}
 
-<h1>EDITANDO DATOS DE {{ nombre_mascota }}</h1>
+<h1>Editando la info de: {{ nombre_mascota }}</h1>
     {% if formulario.errors %}
     <p style="color:red">HAY ALGO MAL EN EL FORMULARIO</p>
     {% endif %}
@@ -15,7 +15,7 @@
             {{ formulario.as_table }}
         </table>
 
-            <input type="submit" value="Enviar">
+            <input class="btn btn-crud-agregar" type="submit" value="Enviar">
             
     </form>
     

@@ -7,7 +7,7 @@ class MascotaFormulario(forms.Form):
     nombre = forms.CharField()
     edad = forms.IntegerField()
     tipo = forms.CharField()
-    #imagen = forms.ImageField()
+    imagen = forms.ImageField()
     autor = forms.CharField(max_length=60)
     fecha = forms.DateTimeField()
 
