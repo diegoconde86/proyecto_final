@@ -129,6 +129,7 @@ def mascotaFormulario(request):
 
     return render(request, 'App/mascotaFormulario.html', {'miFormulario':miFormulario} )
 
+@login_required
 def nuestrasmascotas(request):
     mascotas= Mascota.objects.all()
     contexto={"mascotas":mascotas}
@@ -146,7 +147,7 @@ def editarmascota(request,nombre_mascota):
     fecha = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     mascotas= Mascota.objects.get(nombre=nombre_mascota)
     if request.method == "POST":
-        form = Mascota(request.POST)
+        form = MascotaFormulario(request.POST)
         if form.is_valid():
             info = form.cleaned_data
             mascotas.nombre = info['nombre']

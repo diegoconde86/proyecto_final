@@ -13,15 +13,19 @@
 
     <li>{{ mascota }}</li>
     <button>
-        <a href="{% url 'eliminarmascota' mascota.nombre %}"> Eliminar</a>
+        <a class="btn btn-crud-eliminar" href="{% url 'eliminarmascota' mascota.nombre %}"> Eliminar</a>
     </button>
     <button>
-        <a href="{% url 'editarmascota' mascota.nombre %}"> Editar</a>
+        <a class="btn btn-crud-editar" href="{% url 'editarmascota' mascota.nombre %}"> Editar</a>
     </button>
     <input type="hidden" name="autor" value="{{autor}}">
 	<input type="hidden" name="fecha" value="{{fecha}}">
     
 {% endfor %}
+<br><br>
+<button>
+    <a class="btn btn-crud-agregar" href='/mascotaFormulario/'> Agregar Mascota</a>
+</button>
 
   
 {% endblock %}

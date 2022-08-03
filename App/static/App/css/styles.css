@@ -3063,6 +3063,22 @@ textarea.form-control-lg {
   background-color: #6c757d;
   border-color: #6c757d;
 }
+.btn-crud-eliminar {
+  color: #fff;
+  background-color: #dc3545;
+  border-color: #6c757d;
+}
+.btn-crud-editar {
+  color: #fff;
+  background-color: #f89500;
+  border-color: #6c757d;
+}
+
+.btn-crud-agregar {
+  color: #fff;
+  background-color: #159904;
+  border-color: #6c757d;
+}
 .btn-secondary:hover {
   color: #fff;
   background-color: #5c636a;
