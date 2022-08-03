@@ -1,0 +1,28 @@
+{% extends "App/padre.html" %}
+
+{% load static %}
+
+{% block cambia %}
+<h1>Formulario de Mascotas</h1>
+
+    {% if miFormulario.errors %}
+    <p style ='color:red'> 'Hay un error en el formulario revisar'</p>
+    {% endif %}
+
+    {% for mascota in mascotas %}
+
+    <li>{{ mascota }}</li>
+    <button>
+        <a href="{% url 'eliminarmascota' mascota.nombre %}"> Eliminar</a>
+    </button>
+    <button>
+        <a href="{% url 'editarmascota' mascota.nombre %}"> Editar</a>
+    </button>
+    <input type="hidden" name="autor" value="{{autor}}">
+	<input type="hidden" name="fecha" value="{{fecha}}">
+    
+{% endfor %}
+
+  
+{% endblock %}
+

@@ -1,9 +1,12 @@
 from django.shortcuts import render
+from time import strftime
 from django.http import HttpResponse
 from App.forms import MascotaFormulario, ClienteFormulario, UserRegisterForm1, VeterinarioFormulario
 from App.models import Mascota, Cliente, Veterinario
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.decorators import login_required    #@login_required
+from datetime import date, datetime
 
 # Create your views here.
 def inicio(request):
@@ -19,22 +22,7 @@ def cliente(request):
 def veterinario(request):
     return render(request, 'App/veterinario.html')
 
-def mascotaFormulario(request):
-    if request.method == 'POST':
-        miFormulario = MascotaFormulario(request.POST)
-        print(miFormulario)
-        if miFormulario.is_valid:
-            informacion = miFormulario.cleaned_data
 
-            mascota = Mascota(nombre = informacion['nombre'], edad = informacion['edad'], tipo = informacion['tipo'])
-            mascota.save()
-
-            return render(request, 'App/inicio.html')
-        
-    else:
-        miFormulario= MascotaFormulario()
-
-    return render(request, 'App/mascotaFormulario.html', {'miFormulario':miFormulario} )
 
 def clienteFormulario(request):
     if request.method == 'POST':
@@ -119,5 +107,58 @@ def register(request):
     else:
         form= UserRegisterForm1()
     return render(request,"App/register.html", {'form':form})
+
+    # CRUD NUESTRAS MASCOTAS.
+
+def mascotaFormulario(request):
+    autor = request.user.username
+    fecha = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    if request.method == 'POST':
+        miFormulario = MascotaFormulario(request.POST)
+        print(miFormulario)
+        if miFormulario.is_valid:
+            informacion = miFormulario.cleaned_data
+
+            mascota = Mascota(nombre = informacion['nombre'], edad = informacion['edad'], tipo = informacion['tipo'], autor=autor, fecha=fecha)
+            mascota.save()
+
+            return render(request, 'App/inicio.html')
+        
+    else:
+        miFormulario= MascotaFormulario()
+
+    return render(request, 'App/mascotaFormulario.html', {'miFormulario':miFormulario} )
+
+def nuestrasmascotas(request):
+    mascotas= Mascota.objects.all()
+    contexto={"mascotas":mascotas}
+    return render(request, "App/nuestrasmascotas.html",contexto)
+
+def eliminarmascota(request, nombre_mascota):
+    mascotas= Mascota.objects.get(nombre=nombre_mascota)
+    mascotas.delete()
+    mascotas= Mascota.objects.all()
+    contexto={"mascotas":mascotas}
+    return render(request, "App/nuestrasmascotas.html",contexto)
+
+def editarmascota(request,nombre_mascota):
+    autor = request.user.username
+    fecha = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    mascotas= Mascota.objects.get(nombre=nombre_mascota)
+    if request.method == "POST":
+        form = Mascota(request.POST)
+        if form.is_valid():
+            info = form.cleaned_data
+            mascotas.nombre = info['nombre']
+            mascotas.edad= info["edad"]
+            mascotas.tipo= info["tipo"]
+            mascotas.autor= info["autor"]
+            mascotas.fecha= fecha
+            mascotas.save()
+            return render(request,"App/inicio.html")
+    else:
+        form= MascotaFormulario(initial={"nombre":mascotas.nombre, "edad":mascotas.edad, "tipo":mascotas.tipo, "autor":mascotas.autor, "fecha":mascotas.fecha})
+    return render(request, "App/editarmascota.html",{"formulario":form, "nombre_mascota":nombre_mascota})
+
 
     

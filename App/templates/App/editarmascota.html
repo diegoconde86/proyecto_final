@@ -1,0 +1,24 @@
+{% extends "App/padre.html" %}
+
+{% load static %}
+
+{% block cambia %}
+
+<h1>EDITANDO DATOS DE {{ nombre_mascota }}</h1>
+    {% if formulario.errors %}
+    <p style="color:red">HAY ALGO MAL EN EL FORMULARIO</p>
+    {% endif %}
+
+    <form action='/mascotaFormulario/' method="POST"> {% csrf_token %}
+ 
+        <table>
+            {{ formulario.as_table }}
+        </table>
+
+            <input type="submit" value="Enviar">
+            
+    </form>
+    
+  
+{% endblock %}
+
