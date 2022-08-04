@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from time import strftime
 from django.http import HttpResponse
-from App.forms import MascotaFormulario, ClienteFormulario, UserRegisterForm1, VeterinarioFormulario
+from App.forms import MascotaFormulario, ClienteFormulario, UserRegisterForm1, VeterinarioFormulario,UserEditForm
 from App.models import Mascota, Cliente, Veterinario
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
@@ -78,7 +78,6 @@ def nosotros(request):
 
 
 def login_request(request):
-    print("HOLA")
     if request.method == "POST":
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid:
@@ -96,6 +95,7 @@ def login_request(request):
     form=AuthenticationForm()
     return render(request,"App/login.html", {'form':form})
 
+
 def register(request):
     if request.method == 'POST':
         form= UserRegisterForm1(request.POST)
@@ -108,7 +108,7 @@ def register(request):
     return render(request,"App/register.html", {'form':form})
 
     # CRUD NUESTRAS MASCOTAS.
-
+@login_required
 def mascotaFormulario(request):
     autor = request.user.username
     fecha = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -132,14 +132,14 @@ def nuestrasmascotas(request):
     mascotas= Mascota.objects.all()
     contexto={"mascotas":mascotas}
     return render(request, "App/nuestrasmascotas.html",contexto)
-
+@login_required
 def eliminarmascota(request, nombre_mascota):
     mascotas= Mascota.objects.get(nombre=nombre_mascota)
     mascotas.delete()
     mascotas= Mascota.objects.all()
     contexto={"mascotas":mascotas}
     return render(request, "App/nuestrasmascotas.html",contexto)
-
+@login_required
 def editarmascota(request,nombre_mascota):
     autor = request.user.username
     fecha = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -167,3 +167,20 @@ def buscar(request):
         return render(request, "App/nuestrasmascotas.html", contexto)
     else:
         return render(request, "App/nuestrasmascotas.html", {"mensaje":" No se ingreso ningun nombre."})
+
+def editarperfil(request):
+    usuario=request.user
+
+    if request.method=="POST":
+        formulario= UserEditForm(request.POST, instance=usuario)
+        if formulario.is_valid():
+            informacion=formulario.cleaned_data
+            usuario.email=informacion['email']
+            usuario.password1=informacion['password1']
+            usuario.password2=informacion['password2']
+            usuario.save()
+
+            return render(request, 'App/inicio.html', {'usuario':usuario, 'mensaje': 'PERFIL EDITADO EXITOSAMENTE'})
+    else:
+        formulario=UserEditForm(instance=usuario)
+    return render(request, 'App/editarperfil.html', {'formulario':formulario, 'usuario':usuario.username})

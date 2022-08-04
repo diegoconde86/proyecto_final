@@ -29,13 +29,16 @@
     height="100">
     <br>
     <p class="lead mb-0">{{ mascota }}</p>
-    
+    <br>
+    {% if request.user.is_superuser %}
     <button>
         <a class="btn btn-crud-eliminar" href="{% url 'eliminarmascota' mascota.nombre %}"> Eliminar</a>
     </button>
     <button>
         <a class="btn btn-crud-editar" href="{% url 'editarmascota' mascota.nombre %}"> Editar</a>
     </button>
+    {% endif %}
+    <br>
     <input type="hidden" name="autor" value="{{autor}}">
 	<input type="hidden" name="fecha" value="{{fecha}}">
     

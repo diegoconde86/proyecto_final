@@ -23,4 +23,5 @@ urlpatterns = [
     path('nuestrasmascotas/', nuestrasmascotas, name='nuestrasmascotas'),
     path('eliminarmascota/<nombre_mascota>', eliminarmascota, name='eliminarmascota'),
     path('editarmascota/<nombre_mascota>', editarmascota, name='editarmascota'),
+    path('editarperfil/', editarperfil, name='editarperfil'),
 ]
