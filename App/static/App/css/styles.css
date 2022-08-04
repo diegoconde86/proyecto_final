@@ -3088,6 +3088,13 @@ textarea.form-control-lg {
   border-color: #6c757d;
   line-height: 0.1;
 }
+
+.btn-crud-editar_perfil {
+  color: #fff;
+  background-color: #159904;
+  border-color: #6c757d;
+  line-height: 0.01;
+}
 .btn-secondary:hover {
   color: #fff;
   background-color: #5c636a;

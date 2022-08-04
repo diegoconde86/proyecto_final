@@ -39,6 +39,6 @@ class UserEditForm(UserCreationForm):
     last_name=forms.CharField(max_length=50)
 
     class Meta:
-     model = User
-     fields = ['username', 'email', 'password1', 'password2', 'first_name', 'last_name']
-     help_texts = {k:"" for k in fields}
+        model = User
+        fields = ['username', 'email', 'password1', 'password2', 'first_name', 'last_name']
+        help_texts = {k:"" for k in fields}

@@ -3,7 +3,7 @@ from time import strftime
 from django.http import HttpResponse
 from App.forms import MascotaFormulario, ClienteFormulario, UserRegisterForm1, VeterinarioFormulario,UserEditForm
 from App.models import Mascota, Cliente, Veterinario
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required    #@login_required
 from datetime import date, datetime
@@ -170,12 +170,13 @@ def buscar(request):
 
 def editarperfil(request):
     usuario=request.user
-
     if request.method=="POST":
         formulario= UserEditForm(request.POST, instance=usuario)
         if formulario.is_valid():
             informacion=formulario.cleaned_data
             usuario.email=informacion['email']
+            print("ESTOY")
+            print(informacion['password1'])
             usuario.password1=informacion['password1']
             usuario.password2=informacion['password2']
             usuario.save()

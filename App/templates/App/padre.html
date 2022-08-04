@@ -38,7 +38,8 @@
                 
                 <a class="btn btn-danger" href="{% url 'login' %}">LOGIN</a>
                 {% else %}
-                <p> hola! {{ request.user.username }}</p>
+                <p> HOLA {{ request.user.username }}!</p>
+                <a class="btn btn-crud-editar_perfil" href="{% url 'editarperfil' %}">Editar Perfil</a>
                 
                 <a class="btn btn-danger" href="{% url 'logout' %}">LOGOUT</a>
                 {% endif %}
