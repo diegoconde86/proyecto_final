@@ -11,6 +11,16 @@ class MascotaFormulario(forms.Form):
     autor = forms.CharField(max_length=60)
     fecha = forms.DateTimeField()
 
+class ArticuloFormulario (forms.Form):  #Clase para importar articulos de Veterinaria
+    titulo = forms.CharField()
+    subtitulo = forms.CharField()
+    cuerpo = RichTextFormField()
+    autor = forms.CharField()
+    fecha = forms.DateTimeField()
+    editado = forms.CharField()
+    imagen = forms.ImageField()
+
+
 class ClienteFormulario(forms.Form):
     nombre = forms.CharField()
     apellido = forms.CharField()
@@ -42,3 +52,4 @@ class UserEditForm(UserCreationForm):
         model = User
         fields = ['username', 'email', 'password1', 'password2', 'first_name', 'last_name']
         help_texts = {k:"" for k in fields}
+

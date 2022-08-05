@@ -1,0 +1,23 @@
+{% extends "App/padre.html" %}
+
+{% load static %}
+
+{% block cambia %}
+
+<h1>Editando la info de: {{ id_art }}</h1>
+    {% if miFormulario.errors %}
+    <p style="color:red">HAY ALGO MAL EN EL FORMULARIO {{miFormulario.errors}}</p>
+    {% endif %}
+
+    <form action="{% url 'editararticulo' id_art %}" method="POST" enctype="multipart/form-data"> {% csrf_token %}
+ 
+        {{miFormulario.media}}
+        {{miFormulario.as_p}}
+
+            <input class="btn btn-crud-agregar" type="submit" value="Enviar">
+            
+    </form>
+    
+  
+{% endblock %}
+

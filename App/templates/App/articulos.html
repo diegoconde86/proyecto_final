@@ -1,0 +1,54 @@
+{% extends "App/padre.html" %}
+
+{% load static %}
+
+{% block cambia %}
+<h1>CUIDANDO A NUESTRAS MASCOTAS!!</h1>
+<br>
+<h4>Conoce todo lo necesario para el cuidado y bienesar de nuestros animales:</h4>
+
+        
+        <form action = "{% url 'buscararticulo' %}" method="GET">
+
+            <input type="text" name = 'nombre'  id = 'nombre'>    
+    
+            <input class="btn btn-crud-buscar" type = 'submit', value='Buscar'>
+
+        </form>
+
+    {% if mensaje %}
+    <p style ='color:red'> {{mensaje}}</p>
+    {% endif %}
+
+    {% if .errors %}
+    <p style ='color:red'> 'Hay un error en el formulario revisar'</p>
+    {% endif %}
+
+    {% for articulo in articulos %}   
+
+    <img src="/{{ articulo.imagen }}" width="100" 
+    height="100">
+    <br>
+    <p class="lead mb-0">{{ articulo }}</p>
+    <br>
+    {% if request.user.is_superuser %}
+    <button>
+        <a class="btn btn-crud-eliminar" href="{% url 'eliminararticulo' articulo.id %}"> Eliminar</a>
+    </button>
+    <button>
+        <a class="btn btn-crud-editar" href="{% url 'editararticulo' articulo.id %}"> Editar</a>
+    </button>
+    {% endif %}
+    <br>
+    <input type="hidden" name="autor" value="{{autor}}">    
+	<input type="hidden" name="fecha" value="{{fecha}}">
+    
+{% endfor %}
+<br><br>
+<button>
+    <a class="btn btn-crud-agregar" href='/articuloFormulario/'> Agregar Mascota</a>
+</button>
+
+  
+{% endblock %}
+

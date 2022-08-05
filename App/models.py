@@ -39,3 +39,6 @@ class Articulo (models.Model):  #Clase para importar articulos de Veterinaria
     fecha = models.DateTimeField()
     editado = models.CharField(max_length=10)
     imagen = models.ImageField(upload_to = "articulos", null=True, blank=True)
+
+    def __str__(self) -> str:
+        return 'Titulo: '+ self.titulo + ' Subtitulo: ' + str(self.subtitulo)

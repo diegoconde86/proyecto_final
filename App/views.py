@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from time import strftime
 from django.http import HttpResponse
-from App.forms import MascotaFormulario, ClienteFormulario, UserRegisterForm1, VeterinarioFormulario,UserEditForm
-from App.models import Mascota, Cliente, Veterinario
+from App.forms import MascotaFormulario, ClienteFormulario, UserRegisterForm1, VeterinarioFormulario, UserEditForm, ArticuloFormulario
+from App.models import Articulo, Mascota, Cliente, Veterinario
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required    #@login_required
@@ -107,7 +107,27 @@ def register(request):
         form= UserRegisterForm1()
     return render(request,"App/register.html", {'form':form})
 
-    # CRUD NUESTRAS MASCOTAS.
+def editarperfil(request):
+    usuario=request.user
+    if request.method=="POST":
+        formulario= UserEditForm(request.POST, instance=usuario)
+        if formulario.is_valid():
+            informacion=formulario.cleaned_data
+            usuario.email=informacion['email']
+            print("ESTOY")
+            print(informacion['password1'])
+            usuario.password1=informacion['password1']
+            usuario.password2=informacion['password2']
+            usuario.save()
+
+            return render(request, 'App/inicio.html', {'usuario':usuario, 'mensaje': 'PERFIL EDITADO EXITOSAMENTE'})
+    else:
+        formulario=UserEditForm(instance=usuario)
+    return render(request, 'App/editarperfil.html', {'formulario':formulario, 'usuario':usuario.username})    
+
+    # CRUD NUESTRAS MASCOTAS --------------------------------------------------------
+
+
 @login_required
 def mascotaFormulario(request):
     autor = request.user.username
@@ -132,6 +152,7 @@ def nuestrasmascotas(request):
     mascotas= Mascota.objects.all()
     contexto={"mascotas":mascotas}
     return render(request, "App/nuestrasmascotas.html",contexto)
+
 @login_required
 def eliminarmascota(request, nombre_mascota):
     mascotas= Mascota.objects.get(nombre=nombre_mascota)
@@ -139,6 +160,7 @@ def eliminarmascota(request, nombre_mascota):
     mascotas= Mascota.objects.all()
     contexto={"mascotas":mascotas}
     return render(request, "App/nuestrasmascotas.html",contexto)
+
 @login_required
 def editarmascota(request,nombre_mascota):
     autor = request.user.username
@@ -168,20 +190,52 @@ def buscar(request):
     else:
         return render(request, "App/nuestrasmascotas.html", {"mensaje":" No se ingreso ningun nombre."})
 
-def editarperfil(request):
-    usuario=request.user
-    if request.method=="POST":
-        formulario= UserEditForm(request.POST, instance=usuario)
-        if formulario.is_valid():
-            informacion=formulario.cleaned_data
-            usuario.email=informacion['email']
-            print("ESTOY")
-            print(informacion['password1'])
-            usuario.password1=informacion['password1']
-            usuario.password2=informacion['password2']
-            usuario.save()
+# CRUD ARTICULOS --------------------------------------------------------
 
-            return render(request, 'App/inicio.html', {'usuario':usuario, 'mensaje': 'PERFIL EDITADO EXITOSAMENTE'})
+@login_required
+def articulos(request):
+    articulos= Articulo.objects.all()
+    contexto={"articulos":articulos}
+    return render(request, "App/articulos.html",contexto)
+
+@login_required
+def articuloFormulario(request):
+    autor = request.user.username
+    fecha = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    if request.method == 'POST':
+        miFormulario = ArticuloFormulario(request.POST, request.FILES)
+        if miFormulario.is_valid:
+            informacion =  miFormulario.cleaned_data
+            articulo = Articulo(titulo = informacion['titulo'], subtitulo = informacion['subtitulo'], cuerpo = informacion['cuerpo'], autor=autor, fecha=fecha, editado = informacion['editado'], imagen=informacion['imagen'],  )
+            articulo.save()
+
+            return render(request, 'App/inicio.html')
+        
     else:
-        formulario=UserEditForm(instance=usuario)
-    return render(request, 'App/editarperfil.html', {'formulario':formulario, 'usuario':usuario.username})
+        miFormulario= ArticuloFormulario()
+
+    return render(request, 'App/articuloFormulario.html', {'miFormulario':miFormulario} )
+
+def editararticulo(request,id_art):
+    imagen = Articulo.objects.get(id=id_art)
+    #fecha = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    articulo= Articulo.objects.get(id=id_art)
+    print(request.method)
+    if request.method == "POST":
+        form = ArticuloFormulario(request.POST)
+        if form.is_valid():
+            print("DIEGOOO")
+            info = form.cleaned_data
+            articulo.titulo = info['titulo']
+            articulo.subtitulo= info["subtitulo"]
+            articulo.cuerpo= info["cuerpo"]
+            articulo.autor= info["autor"]
+            articulo.fecha= info["fecha"]
+            articulo.editado= info["editado"]
+            articulo.imagen= info["imagen"]
+            articulo.save()
+            return render(request,"App/inicio.html")
+    else:
+        form= ArticuloFormulario(initial={"titulo":articulo.titulo, "subtitulo":articulo.subtitulo, "cuerpo":articulo.cuerpo, "autor":articulo.autor, "fecha":articulo.fecha
+        , "editado":articulo.editado, "imagen":imagen.imagen})
+    return render(request, "App/editararticulo.html",{"miFormulario":form, "id_art":id_art})   
