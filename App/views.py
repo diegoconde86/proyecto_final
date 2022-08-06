@@ -256,8 +256,8 @@ def leerarticulo(request,id_art):
     print(request.method)
     if request.method == "POST":
         contexto={"articulos":articulo}
-        return render(request, "App/articulos.html",contexto)
+        return render(request, "App/leerarticulo.html",contexto)
     else:
         contexto={"articulos":articulo}
-    return render(request, "App/articulos.html",contexto)    
+    return render(request, "App/leerarticulo.html",contexto)    
     
