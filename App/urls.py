@@ -33,5 +33,6 @@ urlpatterns = [
     path('articuloFormulario/', articuloFormulario, name='articuloFormulario'),
     path('editararticulo/<id_art>', editararticulo, name='editararticulo'),
     path('eliminararticulo/<nombre_mascota>', articulos, name='eliminararticulo'),
-    path('buscararticulo/', articulos, name='buscararticulo'),
+    path('buscararticulo/', buscararticulo, name='buscararticulo'),
+    path('leerarticulo/<id_art>', leerarticulo, name='leerarticulo'),
 ]

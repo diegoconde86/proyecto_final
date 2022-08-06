@@ -10,7 +10,7 @@
         
         <form action = "{% url 'buscararticulo' %}" method="GET">
 
-            <input type="text" name = 'nombre'  id = 'nombre'>    
+            <input type="text" name = 'titulo'  id = 'titulo' >    
     
             <input class="btn btn-crud-buscar" type = 'submit', value='Buscar'>
 
@@ -26,8 +26,8 @@
 
     {% for articulo in articulos %}   
 
-    <img src="/{{ articulo.imagen }}" width="100" 
-    height="100">
+    <img src="/{{ articulo.imagen }}" width="250" 
+    height="250">
     <br>
     <p class="lead mb-0">{{ articulo }}</p>
     <br>
@@ -39,6 +39,10 @@
         <a class="btn btn-crud-editar" href="{% url 'editararticulo' articulo.id %}"> Editar</a>
     </button>
     {% endif %}
+    <button>
+        <a class="btn btn-crud-leer" href="{% url 'leerarticulo' articulo.id %}"> Leer+</a>
+    </button>
+    <br>
     <br>
     <input type="hidden" name="autor" value="{{autor}}">    
 	<input type="hidden" name="fecha" value="{{fecha}}">
@@ -46,7 +50,7 @@
 {% endfor %}
 <br><br>
 <button>
-    <a class="btn btn-crud-agregar" href='/articuloFormulario/'> Agregar Mascota</a>
+    <a class="btn btn-crud-agregar" href='/articuloFormulario/'> Agregar Articulo</a>
 </button>
 
   

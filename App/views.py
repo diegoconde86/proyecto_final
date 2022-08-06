@@ -149,7 +149,7 @@ def mascotaFormulario(request):
 
 @login_required
 def nuestrasmascotas(request):
-    mascotas= Mascota.objects.all()
+    mascotas= Mascota.objects.all().order_by('id').reverse()
     contexto={"mascotas":mascotas}
     return render(request, "App/nuestrasmascotas.html",contexto)
 
@@ -184,7 +184,7 @@ def editarmascota(request,nombre_mascota):
 def buscar(request):
     if request.GET["nombre"]:
         nombre_mascota= request.GET["nombre"]
-        mascotas = Mascota.objects.filter(nombre__icontains = nombre_mascota) 
+        mascotas = Mascota.objects.filter(nombre__icontains = nombre_mascota).order_by('id').reverse()
         contexto={"mascotas":mascotas,"mensaje":f"Resultados de la Busqueda {nombre_mascota}" }
         return render(request, "App/nuestrasmascotas.html", contexto)
     else:
@@ -194,7 +194,7 @@ def buscar(request):
 
 @login_required
 def articulos(request):
-    articulos= Articulo.objects.all()
+    articulos= Articulo.objects.all().order_by('id').reverse()
     contexto={"articulos":articulos}
     return render(request, "App/articulos.html",contexto)
 
@@ -216,15 +216,14 @@ def articuloFormulario(request):
 
     return render(request, 'App/articuloFormulario.html', {'miFormulario':miFormulario} )
 
+@login_required
 def editararticulo(request,id_art):
     imagen = Articulo.objects.get(id=id_art)
     #fecha = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     articulo= Articulo.objects.get(id=id_art)
-    print(request.method)
     if request.method == "POST":
         form = ArticuloFormulario(request.POST)
         if form.is_valid():
-            print("DIEGOOO")
             info = form.cleaned_data
             articulo.titulo = info['titulo']
             articulo.subtitulo= info["subtitulo"]
@@ -239,3 +238,26 @@ def editararticulo(request,id_art):
         form= ArticuloFormulario(initial={"titulo":articulo.titulo, "subtitulo":articulo.subtitulo, "cuerpo":articulo.cuerpo, "autor":articulo.autor, "fecha":articulo.fecha
         , "editado":articulo.editado, "imagen":imagen.imagen})
     return render(request, "App/editararticulo.html",{"miFormulario":form, "id_art":id_art})   
+
+def buscararticulo(request):
+    
+    if request.GET["titulo"]:
+        print("SII")
+        titulo_articulo= request.GET["titulo"]
+        articulo = Articulo.objects.filter(titulo__icontains = titulo_articulo).order_by('id').reverse()
+        contexto={"articulos":articulo,"mensaje":f"Resultados de la Busqueda {titulo_articulo}" }
+        return render(request, "App/articulos.html", contexto)
+    else:
+        return render(request, "App/articulos.html", {"mensaje":" No se ingreso ninguna descripción."})
+
+@login_required
+def leerarticulo(request,id_art):
+    articulo = Articulo.objects.filter(id=id_art)
+    print(request.method)
+    if request.method == "POST":
+        contexto={"articulos":articulo}
+        return render(request, "App/articulos.html",contexto)
+    else:
+        contexto={"articulos":articulo}
+    return render(request, "App/articulos.html",contexto)    
+    

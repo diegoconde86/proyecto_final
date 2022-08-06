@@ -3075,6 +3075,12 @@ textarea.form-control-lg {
   border-color: #6c757d;
   line-height: 0.1;
 }
+.btn-crud-leer {
+  color: #fff;
+  background-color: rgba(16, 190, 94, 0.815);
+  border-color: #6c757d;
+  line-height: 0.1;
+}
 .btn-crud-buscar {
   color: #fff;
   background-color: #159904;
