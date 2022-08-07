@@ -44,15 +44,14 @@
     </button>
     <br>
     <br>
-    <input type="hidden" name="autor" value="{{autor}}">    
-	<input type="hidden" name="fecha" value="{{fecha}}">
     
 {% endfor %}
 <br><br>
+{% if request.user.is_superuser %}
 <button>
     <a class="btn btn-crud-agregar" href='/articuloFormulario/'> Agregar Articulo</a>
 </button>
-
+{% endif %}
   
 {% endblock %}
 

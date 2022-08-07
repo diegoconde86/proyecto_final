@@ -14,7 +14,7 @@ class Mascota(models.Model):
     #titulo, subtitulo, cuerpo, autor, imagenes, fecha
 
     def __str__(self) -> str:
-        return 'nombre: '+self.nombre + ' edad: ' + str(self.edad) + ' tipo: ' + self.tipo
+        return self.nombre + ' (' + str(self.edad) + ') - ' + self.tipo
 
 class Cliente(models.Model):
     nombre = models.CharField(max_length=50)
@@ -41,4 +41,4 @@ class Articulo (models.Model):  #Clase para importar articulos de Veterinaria
     imagen = models.ImageField(upload_to = "articulos", null=True, blank=True)
 
     def __str__(self) -> str:
-        return 'Titulo: '+ self.titulo + ' Subtitulo: ' + str(self.subtitulo)
+        return self.titulo + ' autor: ' + str(self.autor)

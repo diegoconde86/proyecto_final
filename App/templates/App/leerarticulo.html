@@ -5,8 +5,7 @@
 {% block cambia %}
 <h1>CUIDANDO A NUESTRAS MASCOTAS!!</h1>
 <br>
-
-    <h4>{{articulos.titulo}}</h4>
+    
     {% if mensaje %}
     <p style ='color:red'> {{mensaje}}</p>
     {% endif %}
@@ -16,20 +15,19 @@
     {% endif %}
     
     {% for articulo in articulos %}   
-    <section class="showcase">
-        <div class="container-fluid p-0">
-            <div class="row g-0">
-                <div class="col-lg-6 order-lg-2 text-white showcase-img" style="background-image: url('/{{ articulo.imagen }}')"></div>
-                <div class="col-lg-6 order-lg-1 my-auto showcase-text">
-                    <h2>{{articulo.subtitulo}}</h2>
-                    <p class="lead mb-0">{{articulo.cuerpo}}</p>
-                </div>
-            </div>
-    
-    <img src="/{{ articulo.imagen }}" width="250" 
-    height="250">
+    <h4>{{articulo.titulo}}</h4>
     <br>
-    <p class="lead mb-0">{{ articulo }}</p>
+    <h7>{{articulo.subtitulo}}</h7>
+    <br>
+   
+   
+        <div class="capa"></div>
+   <div class="parrafo">
+       <img src="/{{ articulo.imagen }}">
+        <p>{{articulo.cuerpo| safe}}</p>
+   </div>
+    
+  
     <br>
     {% if request.user.is_superuser %}
     <button>
@@ -40,14 +38,10 @@
     </button>
     {% endif %}
     <br>
-    <input type="hidden" name="autor" value="{{autor}}">    
-	<input type="hidden" name="fecha" value="{{fecha}}">
+   
     
 {% endfor %}
 <br><br>
-<button>
-    <a class="btn btn-crud-agregar" href='/articuloFormulario/'> Agregar Articulo</a>
-</button>
 
   
 {% endblock %}

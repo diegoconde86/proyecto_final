@@ -11,8 +11,6 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
 
 
-
-
 # Create your views here.
 def inicio(request):
 
@@ -145,7 +143,10 @@ def mascotaFormulario(request):
             mascota = Mascota(nombre = informacion['nombre'], edad = informacion['edad'], tipo = informacion['tipo'], imagen=informacion['imagen'], autor=autor, fecha=fecha)
             mascota.save()
 
-            return render(request, 'App/inicio.html')
+            #return render(request, 'App/inicio.html')
+            mascotas= Mascota.objects.all().order_by('id').reverse()
+            contexto={"mascotas":mascotas}
+            return render(request, "App/nuestrasmascotas.html",contexto)
         
     else:
         miFormulario= MascotaFormulario()
@@ -172,7 +173,7 @@ def editarmascota(request,nombre_mascota):
     fecha = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     mascotas= Mascota.objects.get(nombre=nombre_mascota)
     if request.method == "POST":
-        form = MascotaFormulario(request.POST)
+        form = MascotaFormulario(request.POST, request.FILES)
         if form.is_valid():
             info = form.cleaned_data
             mascotas.nombre = info['nombre']
@@ -180,8 +181,12 @@ def editarmascota(request,nombre_mascota):
             mascotas.tipo= info["tipo"]
             mascotas.autor= info["autor"]
             mascotas.fecha= fecha
+            mascotas.imagen = info['imagen']
             mascotas.save()
-            return render(request,"App/inicio.html")
+            #return render(request,"App/inicio.html")
+            mascotas= Mascota.objects.all().order_by('id').reverse()
+            contexto={"mascotas":mascotas}
+            return render(request, "App/nuestrasmascotas.html",contexto)
     else:
         form= MascotaFormulario(initial={"nombre":mascotas.nombre, "edad":mascotas.edad, "tipo":mascotas.tipo, "autor":mascotas.autor, "fecha":mascotas.fecha})
     return render(request, "App/editarmascota.html",{"formulario":form, "nombre_mascota":nombre_mascota})
@@ -209,12 +214,15 @@ def articuloFormulario(request):
     fecha = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     if request.method == 'POST':
         miFormulario = ArticuloFormulario(request.POST, request.FILES)
-        if miFormulario.is_valid:
+        if miFormulario.is_valid():
             informacion =  miFormulario.cleaned_data
             articulo = Articulo(titulo = informacion['titulo'], subtitulo = informacion['subtitulo'], cuerpo = informacion['cuerpo'], autor=autor, fecha=fecha, editado = informacion['editado'], imagen=informacion['imagen'],  )
             articulo.save()
 
-            return render(request, 'App/inicio.html')
+            #return render(request,"App/articulos.html")
+            articulos= Articulo.objects.all().order_by('id').reverse()
+            contexto={"articulos":articulos}
+            return render(request, "App/articulos.html",contexto)
         
     else:
         miFormulario= ArticuloFormulario()
@@ -227,7 +235,7 @@ def editararticulo(request,id_art):
     #fecha = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     articulo= Articulo.objects.get(id=id_art)
     if request.method == "POST":
-        form = ArticuloFormulario(request.POST)
+        form = ArticuloFormulario(request.POST, request.FILES)
         if form.is_valid():
             info = form.cleaned_data
             articulo.titulo = info['titulo']
@@ -238,7 +246,10 @@ def editararticulo(request,id_art):
             articulo.editado= info["editado"]
             articulo.imagen= info["imagen"]
             articulo.save()
-            return render(request,"App/inicio.html")
+            #return render(request,"App/articulos.html")
+            articulos= Articulo.objects.all().order_by('id').reverse()
+            contexto={"articulos":articulos}
+            return render(request, "App/articulos.html",contexto)
     else:
         form= ArticuloFormulario(initial={"titulo":articulo.titulo, "subtitulo":articulo.subtitulo, "cuerpo":articulo.cuerpo, "autor":articulo.autor, "fecha":articulo.fecha
         , "editado":articulo.editado, "imagen":imagen.imagen})
@@ -266,10 +277,17 @@ def leerarticulo(request,id_art):
         contexto={"articulos":articulo}
     return render(request, "App/leerarticulo.html",contexto)    
 
+@login_required
+def eliminararticulo(request, id_art):
+    print("DIEGOOOO")
+    articulo= Articulo.objects.get(id=id_art)
+    articulo.delete()
+    articulo= Articulo.objects.all()
+    contexto={"articulos":articulo}
+    return render(request, "App/articulos.html",contexto)
+
 @login_required   
 def chat(request):
     users = User.objects.all()
-    print("ESTOYACA")
-    print(users)
     contexto={"chats":users}
     return render(request,"App/chat.html",contexto)
