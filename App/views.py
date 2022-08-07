@@ -7,6 +7,11 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required    #@login_required
 from datetime import date, datetime
+from django.contrib.auth import get_user_model
+from django.contrib.auth.models import User
+
+
+
 
 # Create your views here.
 def inicio(request):
@@ -192,7 +197,7 @@ def buscar(request):
 
 # CRUD ARTICULOS --------------------------------------------------------
 
-@login_required
+
 def articulos(request):
     articulos= Articulo.objects.all().order_by('id').reverse()
     contexto={"articulos":articulos}
@@ -239,8 +244,8 @@ def editararticulo(request,id_art):
         , "editado":articulo.editado, "imagen":imagen.imagen})
     return render(request, "App/editararticulo.html",{"miFormulario":form, "id_art":id_art})   
 
+@login_required
 def buscararticulo(request):
-    
     if request.GET["titulo"]:
         print("SII")
         titulo_articulo= request.GET["titulo"]
@@ -250,7 +255,7 @@ def buscararticulo(request):
     else:
         return render(request, "App/articulos.html", {"mensaje":" No se ingreso ninguna descripción."})
 
-@login_required
+
 def leerarticulo(request,id_art):
     articulo = Articulo.objects.filter(id=id_art)
     print(request.method)
@@ -260,4 +265,11 @@ def leerarticulo(request,id_art):
     else:
         contexto={"articulos":articulo}
     return render(request, "App/leerarticulo.html",contexto)    
-    
+
+@login_required   
+def chat(request):
+    users = User.objects.all()
+    print("ESTOYACA")
+    print(users)
+    contexto={"chats":users}
+    return render(request,"App/chat.html",contexto)

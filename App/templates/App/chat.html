@@ -1,0 +1,14 @@
+{% extends "App/padre.html" %}
+
+{% load static %}
+
+{% block cambia %}
+{% for c in chats %} 
+
+<button>  
+<a class="btn btn-crud-editar" href="/ms/{{ c.username }}">{{ c.username }}</a>
+</button>   
+<br>
+{% endfor %}
+
+{% endblock %}

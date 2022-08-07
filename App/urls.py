@@ -35,4 +35,5 @@ urlpatterns = [
     path('eliminararticulo/<nombre_mascota>', articulos, name='eliminararticulo'),
     path('buscararticulo/', buscararticulo, name='buscararticulo'),
     path('leerarticulo/<id_art>', leerarticulo, name='leerarticulo'),
+    path('chat/', chat, name='chat'),
 ]
