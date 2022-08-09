@@ -39,6 +39,7 @@
                 <a class="btn btn-danger" href="{% url 'login' %}">LOGIN</a>
                 {% else %}
                 <p> HOLA {{ request.user.username }}!</p>
+                <img src="{{avatar}}" alt="Avatar" class="avatar">
                 <a class="btn btn-crud-editar_perfil" href="{% url 'editarperfil' %}">Editar Perfil</a>
                 
                 <a class="btn btn-danger" href="{% url 'logout' %}">LOGOUT</a>

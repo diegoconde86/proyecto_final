@@ -3,10 +3,14 @@
 {% load static %}
 
 {% block cambia %}
+<h1>Comunicate con cada uno de los usuarios de este Blog!</h1>
+    <br>
+    <h2>Solo tenes que hacer click en el usuario deseado y escribirle lo que quieras. Recorda no compartir informacion personal:</h2>
 {% for c in chats %} 
-
+<br>
 <button>  
-<a class="btn btn-crud-editar" href="/ms/{{ c.username }}">{{ c.username }}</a>
+<a class="btn btn-crud-agregar" href="/ms/{{ c.username }}">{{ c.username }}</a>
+<br>
 </button>   
 <br>
 {% endfor %}

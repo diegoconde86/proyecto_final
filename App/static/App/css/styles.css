@@ -11440,3 +11440,10 @@ footer.footer {
   float: left;
   margin-right: 15px;
 }
+
+.avatar {
+  vertical-align: middle;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}

@@ -13,10 +13,10 @@
 <p style="color:red"> HAY ALGO MAL EN EL FORMULARIO</p>
 {% endif %}
 
-<form action="{% url 'editarperfil' %}" method="POST"> {% csrf_token %}
-   <table>
-    {{ formulario.as_table }}
-   </table>
+<form action="{% url 'editarperfil' %}" method="POST" enctype="multipart/form-data"> {% csrf_token %}
+
+    {{ formulario.as_p }}
+    {{avatar_form.as_p}}
 
     <input type="submit" value="enviar">
 
