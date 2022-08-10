@@ -1,60 +1,47 @@
+
 # Web Django
-Esta, es una página web básica de **mascotas**, tiene las siguientes características que permite ingresas datos de los principales modelos (mascota, cliente, veterinario) así como buscar mascotas en base a su nombre y desplegar los datos de las mascotas con nombre similar:
+este es un blog destinado a que los usuarios puedan ingresar los datos de sus mascotas, compartir sus experiencias
+
+-la pagina esta diseñada para que solo los usuarios registrados puedan acceder a los articulos que en ella se encuntran, los mismos una vez ingresados pueden crear su propio articulo y compartir las caracteristicas de sus mascotas y todo lo que han vivio con ellas
+
+-Solo los usuarios registrados como administradores tienen acceso a modificar y eliminar las publicaciones de todos los usuarios ya registrados
+
+-cada usuario que se registre tendra un avatar predeterminado el cual se puede modificar al lado de su nombre en la barra de navegacion en el boton "Editar Perfil"
+
+-dentro de los diferentes botones que se encuentran en la barra de navegacion tenemos todo lo que podemos ver dentro de nuestra pagina incluyendo una seccion dedicada a los creadores del blog
+
+-Esta misma pagina cuenta con un chat integrado el cual funciona para poder enviar mensajes a los diferentes usuarios que se hayan creado, enviandose al instante, dichos mensajes se guardan dentro de la base de datos
+
+-Nosotros los creadores del blog trabajamos en conjunto en reuniones programando al tiempo y asesorandonos de manera conjunta, es una pagina que se ha formado de las bases de los conocimientos de todos los integrantes
 
 ## Modelos:
 Mascota:
 
-| Campos | Descripción                                   |
+| Campos | Descripción                        |
 |--------|------------------------------------|
 | Nombre | Nombre de la mascota               |
 | Edad   | Edad en años de la mascota         |
 | Tipo   | Tipo de mascota (perro, gato, etc.)|
+| Autor  | Autor del posteo (usuario)         |
+| Fecha  | Fecha de creacion                  |
+| Imagen | Imagen que acompaña al texto       |
 
-Cliente:
+Articulo:
+
+| Campos    | Descripción                         |
+|-----------|-------------------------------------|
+| titulo    | Tiulo del posteo                    |
+| subtitulo | Subtitulo del posteo                |
+| cuerpo    | Texto del posteo de blog            |
+| autor     | Autor del posteo (usuario)          |
+| fecha     | Fecha de creacion                   |
+| editado   | Usuario que modifico                |
+| imagen    | Imagen que acompaña al texto        |
+
+Avatar:
 
 | Campos | Descripción                                   |
 |--------|------------------------------------|
-| Nombre | Nombre de la mascota               |
-| Apelido   | Edad del cliente                |
-| Email   | Email del cliente                 |
-
-Veterinario:
-
-| Campos | Descripción                                   |
-|--------|------------------------------------|
-| Nombre | Nombre del veterinario               |
-| Especialidad   | Especialidad del veterinario (en perros, gatos, etc.)                |
-
-## Templates:
-| HTML | Descripción |
-|------|-------------|
-|inicio.html| Página de inicio |
-|**padre.html**| *padre* del resto de páginas|
-|cliente.html| Página de cliente
-|clienteFormulario.html| Formulario de ingreso de datos del cliente |
-|mascota.html| Página de mascota
-|mascotaFormulario.html| Formulario de ingreso de datos de mascotas|
-|veterinario.html| Página de veterinario|
-|veterinarioFormulario.html| Formulario de Ingreso de datos del veterinario
-| busquedaMascota.html| Busca las mascotas con un nombre similar al ingresado |
-| resultadosBusqueda.html| Muestra el resultados de las búsqueda de las mascotas
-
-## Navegación
-Ingrese a: http://127.0.0.1:8000/App/
-Los links a Inicio, Mascota, Cliente y Veterinario por lo pronto no realizan ninguna funcionalidad más que dirigirse a la página.html respectiva.
-
-En el siguiente texto "xxxx" tiene que actualizarse con el nombre de la página respectiva:
-
-> Este es el contenido de **xxxx** tiene que actualizarse
-
-- En el link MascotaFormulario puede ingresar una mascota.
-
-- En el link ClienteFormulario puede ingresar un cliente.
-
-- En el link VeterinarioFormulario puede ingresar un veterinario.
-
-- En el link BusquedaMascota puede buscar los datos de las mascotas en base al nombre que se digite.
-
-
-
+| User   | Nombre de usuario                  |
+| Imagen | Imagen asociada al usuario         |
 
